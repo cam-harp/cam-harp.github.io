@@ -1,0 +1,22 @@
+{
+    "Weather Report": {
+        "Where do you live?": {
+            "Somewhere on the coast": "How often is it overcast?",
+            "A tiny town in the middle of nowhere": "How often is there nothing to report?",
+            "Near a highway that never sleeps": "How often do sirens pollute your air?",
+            "Somewhere that changes every night": "How often do you watch the skies change alone?"
+        },
+        "What's the weather like there?": {
+            "Sunny": "Do you get tired of the sun?",
+            "Rainy": "Do you get tired of the rain?",
+            "Cloudy": "Do you get tired of the clouds?",
+            "Snowy": "Do you get tired of the snow?"
+        },
+        "What do you want the weather to be?": {
+            "Sunny": "How long until you no longer enjoy the warmth of the sun?",
+            "Rainy": "How long until you no longer notice the sound of the rain hitting your windows?",
+            "Cloudy": "How long until you no longer find the shapes in the clouds?",
+            "Snowy": "How long until you no longer wish there was snow?"
+        }
+    }
+}
