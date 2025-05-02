@@ -64,9 +64,9 @@ d3.csv("draft.csv", d => ({
       .ticks(d3.timeMonth.every(1))
       .tickFormat(d3.timeFormat("%B")))
     .call(g => g.select(".domain").remove())
-    .append("text")
-      .attr("x", width - marginRight)
-      .attr("y", 40)
+  svg.append("text")
+      .attr("x", 600)
+      .attr("y", height - 50)
       .attr("text-anchor", "end")
       .text("Birth Month →");
 
