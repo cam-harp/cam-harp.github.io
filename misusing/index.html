@@ -32,7 +32,7 @@ d3.csv("draft.csv", d => ({
 })).then(draft => {
 
 // chart dimensions and margin 
-  const width = 640;
+  const width = 700;
   const height = 400;
   const marginTop = 40;
   const marginRight = 40;
@@ -65,7 +65,7 @@ d3.csv("draft.csv", d => ({
       .tickFormat(d3.timeFormat("%B")))
     .call(g => g.select(".domain").remove())
   svg.append("text")
-      .attr("x", 600)
+      .attr("x", width - 30)
       .attr("y", height - 50)
       .attr("text-anchor", "end")
       .text("Birth Month →");
