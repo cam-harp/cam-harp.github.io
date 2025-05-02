@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birth Month of First Round Draft Picks</title>
+</head>
+<body>
+<div id="container"></div>
+<script type="module">
+
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+const monthNames = {
+  January: 0,
+  February: 1,
+  March: 2,
+  April: 3,
+  May: 4,
+  June: 5, 
+  July: 6,
+  August: 7,
+  September: 8,
+  October: 9,
+  November: 10,
+  December: 11,
+}
+//using the csv 
+d3.csv("draft.csv", d => ({
+  name: d.name,
+  birthMonth: new Date(Date.UTC(2000, monthNames[d.birthMonth.trim()], 1)),
+  draftPick: +d.draftPick
+})).then(draft => {
+
+// chart dimensions and margin 
+  const width = 640;
+  const height = 400;
+  const marginTop = 40;
+  const marginRight = 40;
+  const marginBottom = 80;
+  const marginLeft = 60;
+
+  draft.forEach(d => {
+   d.birthMonth = new Date(Date.UTC(2000, d.birthMonth.getUTCMonth(), 1));
+  });
+  // making the x
+  const x = d3.scaleTime() //time for dates(months)
+    .domain([new Date(Date.UTC(2000,0,1)), new Date(Date.UTC(2000,11,31))])
+    .range([marginLeft, width - marginRight]);
+
+// making the y
+  const y = d3.scaleLinear() //linear = counting up
+    .domain([0,32])
+    .range([height - marginBottom, marginTop]);
+
+  const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
+
+  // adding the birth months text
+  svg.append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(d3.axisBottom(x)
+      .ticks(d3.timeMonth.every(1))
+      .tickFormat(d3.timeFormat("%B")))
+    .call(g => g.select(".domain").remove())
+    .append("text")
+      .attr("x", width - marginRight)
+      .attr("y", 40)
+      .attr("text-anchor", "end")
+      .text("Birth Month →");
+
+  // adding the draft pick 
+  svg.append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(d3.axisLeft(y))
+    .call(g => g.select(".domain").remove())
+    .append("text")
+      .attr("x", -marginLeft + 10)
+      .attr("y", marginTop - 10)
+      .attr("fill", "currentColor")
+      .attr("text-anchor", "start")
+      .text("↑ Draft Pick");
+
+  svg.append("g")
+    .attr("stroke", "currentColor")
+    .attr("stroke-opacity", 0.1)
+    .call(g => g.append("g")
+      .selectAll("line")
+      .data(x.ticks())
+      .join("line")
+        .attr("x1", d => 0.5 + x(d))
+        .attr("x2", d => 0.5 + x(d))
+        .attr("y1", marginTop)
+        .attr("y2", height - marginBottom))
+    .call(g => g.append("g")
+      .selectAll("line")
+      .data(y.ticks())
+      .join("line")
+        .attr("y1", d => 0.5 + y(d))
+        .attr("y2", d => 0.5 + y(d))
+        .attr("x1", marginLeft)
+        .attr("x2", width - marginRight));
+
+  //points
+  svg.append("g")
+      .attr("stroke", "green")
+      .attr("stroke-width", 1.5)
+      .attr("fill", "grey")
+    .selectAll("circle")
+    .data(draft)
+    .join("circle")
+      .attr("cx", d => x(d.birthMonth))
+      .attr("cy", d => y(d.draftPick))
+      .attr("r", 3);
+
+  //names of players
+  svg.append("g")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 10)
+    .selectAll("text")
+    .data(draft)
+    .join("text")
+      .attr("dy", "0.35em")
+      .attr("x", d => x(d.birthMonth) + 5)
+      .attr("y", d => y(d.draftPick))
+      .text(d => d.name);
+
+
+  document.getElementById("container").appendChild(svg.node());
+
+});
+</script>
+</body>
+</html>
