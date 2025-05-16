@@ -64,12 +64,12 @@
             if (currentRotate === "clockwise") return;
             clearInterval(intervalId); //this is how to make them not compete 
             currentRotate = "clockwise";
-            deg = 0;
+            deg = 360;
             intervalId = setInterval(function () {
                 deg = deg + 30;
                 scale = scale - 0.0995;
                 video.style.transform = `rotateZ(${deg}deg) scale(${scale})`;
-                if (deg > 360) {
+                if (deg > 540) {
                     clearInterval(intervalId);
                     reverseRotation();
                 }
@@ -81,7 +81,7 @@
             currentRotate = "counter";
             deg = 0;
             intervalId = setInterval(function() {
-                deg = deg - 30;
+                deg = deg + 30;
                 scale = scale + 0.1;
                 video.style.transform =`rotateZ(${deg}deg) scale(${scale})`;
                 if (deg < -360) { 
