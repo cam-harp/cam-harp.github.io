@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta  name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="pericarp.js"></script>
+    <title>technics and time</title>
+    <style>
+        #annotation { opacity: 0; transition: all 1s linear; }
+        video {
+            padding: 0;
+            margin: auto;
+            display: none;
+            width: 50vw;
+            transition: 550ms linear all;
+        }
+        video::-webkit-media-controls-fullscreen-button {
+            display: none;
+        }
+    </style>
+</head>
+<body> 
+    <h1>Technics & Time</h1>
+    <p id="rate"></p>
+    <video src="https://archive.org/download/2002-11-08/2002-11-08.mp4"controls></video> 
+    <div id="annotation">Is this normal?</div>
+<script>
+    //video.style.transform = "rotateZ,x,y(2deg)" skew(degree) ?? maybe use for vid
+    let video = document.querySelector("video");
+    let annotate = document.querySelector("#annotation");
+    let counter = 0;
+    let intervalId = null;
+    let currentRotate = null;
+    let deg = 0;
+    let scale = 1;
+
+
+    video.volume = 0.2; //sets volume to half (for my own sanity)
+
+    pericarp.cue(video, 7,10,function(){
+    annotate.style.opacity = 1;
+    },  function(){
+        annotate.style.opacity = 0;
+    });
+
+
+    let go = async function () {
+        await waitForVideo(video);
+        video.style.display = "block";
+    }
+
+    let waitForVideo = async function (vid) {
+        counter++;
+        return new Promise(function (resolve, reject) {
+            vid.addEventListener("canplay", function() {
+                resolve();
+            }, { once: true });
+        })
+    }
+
+
+  //surely some way to use this to make the intervals not compete
+        function startRotation() {
+            if (currentRotate === "clockwise") return;
+            clearInterval(intervalId); //this is how to make them not compete 
+            currentRotate = "clockwise";
+            deg = 0;
+            intervalId = setInterval(function () {
+                deg = deg + 30;
+                scale = scale - 0.0995;
+                video.style.transform = `rotateZ(${deg}deg) scale(${scale})`;
+                if (deg > 360) {
+                    clearInterval(intervalId);
+                    reverseRotation();
+                }
+            }, 500);
+        } 
+        function reverseRotation(){
+            if (currentRotate === "counter") return;
+            clearInterval(intervalId);
+            currentRotate = "counter";
+            deg = 0;
+            intervalId = setInterval(function() {
+                deg = deg - 30;
+                scale = scale + 0.1;
+                video.style.transform =`rotateZ(${deg}deg) scale(${scale})`;
+                if (deg < -360) { 
+                    clearInterval(intervalId);
+                    startRotation();
+                }
+            }, 500);
+        }
+
+    video.addEventListener("timeupdate", function() { //THIS IS WHERE YOU CAN CHANGE THE PLAYBACK RATE AND DIFFERENT TIMES
+        if(this.currentTime > 600) {
+            this.playbackRate = this.playbackRate + 0.5;
+
+        if(this.playbackRate > 7){
+            this.playbackRate = 0.5;
+            this.currentTime = this.currentTime - 600;
+            clearInterval(intervalId);
+            currentRotate = null;
+        }
+        startRotation();
+    }
+
+        if(this.currentTime > 5 && this.currentTime < 600) {
+            this.playbackRate = this.playbackRate + 0.5;
+        if(this.playbackRate > 7){
+            this.playbackRate = 0.5;
+            this.currentTime = this.currentTime + 600;
+            clearInterval(intervalId);
+            currentRotate = null;
+        }
+        reverseRotation();
+    }
+
+        document.querySelector("#rate").textContent = this.playbackRate;
+    })
+
+    video.addEventListener("pause", function() {
+        clearInterval(intervalId);
+        currentRotate = null;
+    });
+    
+    video.addEventListener("play", function() {
+        if (video.currentTime > 600){
+            reverseRotation();
+        } else if (video.currentTime > 5 && video.currentTime < 600) {
+            startRotation();
+        }
+    })
+
+    go();
+</script>
+</body>
+</html>
