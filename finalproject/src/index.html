@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title>Scored</title>
+    <style>
+        body{
+            background-color:bisque;
+            color:tomato;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .description-container {
+            max-width: 90vw;
+            background-color: whitesmoke;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 10px;
+        }
+        .media {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .poster img {
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+        }
+        .trailer iframe {
+            width: 1100px;
+            height: 400px;
+            border: none;
+        }
+        .info {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .info h1 {
+            padding: 10px;
+            margin: 0 0 10px;
+        }
+        .info p {
+            padding: 10px;
+            line-height: 1.5;
+        }
+        .guess-container{
+            max-width: 90vw;
+            text-align: center;
+        }
+        .guess-container input {
+            font-size: 14px;
+            width: 100px;
+            text-align: center;
+            padding: 5px;
+            margin: 5px;
+        }
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .hint {
+            font-size: 18px;
+        }
+        #confetti-pop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            background-color: rgba(255, 228, 196, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            font-size: 24px;
+            color: black;
+            display: none;
+        }
+        #confetti-pop img{
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        #sad-pop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            background-color: rgba(255, 228, 196, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            font-size: 24px;
+            color: black;
+            display: none;
+        }
+        #sad-pop img {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        #logodes-pop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            background-color: bisque;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .des-pop {
+            background-color: bisque;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .des-pop .logo{
+            width: 500px;
+            margin-bottom: 20px;
+        }
+        .des-pop h2 {
+            color: tomato;
+            margin: 0 0 10px;
+        }
+        .des-pop p {
+            font-size: 16px;
+            color: tomato;
+            margin-bottom: 20px;
+        }
+        #closelogodes-pop {
+            padding: 20px;
+            font-size: 16px;
+            background-color: tomato;
+            color: bisque;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="logodes-pop">
+        <div class="des-pop">
+            <img src="scored.png" class="logo">
+            <p>Guess the movie rating in 5 tries. The movie changes daily so if you fail today don't worry, just try again tomorrow!</p>
+            <button id="enter-pop">Enter Game</button>
+        </div>
+    </div>
+    <div class="description-container">
+        <div class="media">
+            <div class="poster">
+                <img src="" alt="Movie Poster">
+            </div>
+            <div class="trailer">
+                <iframe src="" alt="Movie Trailer"></iframe>
+            </div>
+        </div>
+        <div class="info">
+            <h1></h1>
+            <p></p>
+        </div>
+    </div>
+    <div class="guess-container">
+        <h3>Guess the movie's critic review score (0.0-10.0):</h3>
+        <div id="present-guess"></div>
+        <div id="past-guess"></div>
+    </div>
+    <div id="confetti-pop">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDlydjRjcWxyazc0eTViZ3JjbWkwbmFuMnVnZDhmY2R1OGNidG1qOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DyQrKMpqkAhNHZ1iWe/giphy.gif">
+        <div id="confetti-message"></div>
+    </div>
+    <div id="sad-pop">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmsxZTRpOWZrc3h1NHlwZjBzaWdya3FlN2lzbTdhMmJydjNrbnpybSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Mm6Q3R2S4aAInjCDk7/giphy.gif">
+        <div id="fail-message"></div>
+    </div>
+    <audio id="win-sound" src="audio/tada-234709.mp3"></audio>
+    <audio id="lose-sound" src="audio/wahwahwahwaaaahahahahahaha-94669.mp3"></audio>
+</body>
+<script>
+
+    async function loadingMovieOfTheDay() {
+        try {
+            //grabbing a new movie everyday
+            const baseURL = '';
+            const response = await fetch(`${baseURL}/api/movie-of-the-day`);
+            const movie = await response.json();
+
+            
+            //finding the data from the movie
+            document.querySelector('.info h1').textContent = movie.title;
+            document.querySelector('.info p').textContent = movie.overview;
+            document.querySelector('.poster img').src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+            
+                
+                const trailerContainer = document.querySelector('.trailer');
+                trailerContainer.innerHTML = '';
+                if (movie.trailer){
+                const youtubeUrl = `https://www.youtube.com/embed/${movie.trailer.key}`;
+                const iframe = document.createElement('iframe');
+                iframe.src = youtubeUrl;
+                iframe.allowFullscreen = true;
+                trailerContainer.appendChild(iframe);
+            }
+            
+            //budget and revenue
+            const infoContainer = document.querySelector('.info');
+            [...infoContainer.querySelectorAll('.budget, .revenue')].forEach(el => el.remove());
+            function budRevUSD(number) {
+                return number.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0});
+            }
+            const budgetElem = document.createElement('p');
+            budgetElem.textContent = `Budget: ${budRevUSD(movie.budget)}`;
+            const revenueElem = document.createElement('p');
+            revenueElem.textContent =  `Revenue: ${budRevUSD(movie.revenue)}`;
+
+            infoContainer.appendChild(budgetElem);
+            infoContainer.appendChild(revenueElem);
+
+            const presentGuessDiv = document.getElementById('present-guess');
+            const pastGuessDiv = document.getElementById('past-guess');
+
+
+            let correctGuess = movie.vote_average.toFixed(1);
+            let guessCount = 0;
+            let maxGuesses = 5;
+
+            function startGuessing() {
+                if (guessCount >= maxGuesses) return;
+
+                presentGuessDiv.innerHTML = '';
+                //putting this here so it is easier to get guessCount into placeholder
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.step = '0.1';
+                input.min = '0';
+                input.max = '10';
+                input.placeholder = `Guess #${guessCount + 1}`;
+
+                const reply = document.createElement('div');
+                reply.classList.add('hint');
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('wrapper');
+                wrapper.appendChild(input);
+                presentGuessDiv.appendChild(wrapper);
+                const submitButton = document.createElement('button');
+                submitButton.textContent = 'Submit Guess';
+                wrapper.appendChild(submitButton);
+                //so useful for automatically clicking on box instead of manually moving mouse everytime...
+                input.focus();
+                //Made it to where everytime you click an arrow it doesn't auto enter
+                    function Guess() {
+                    const userGuess = input.value;
+                    if (isNaN(userGuess)) return;
+                    if (userGuess < 0 || userGuess > 10) {
+                        alert("Please enter a number between 0 and 10.");
+                        input.value = '';
+                        input.focus();
+                        return;
+                    }
+                    guessCount++;
+                    input.disabled = true;
+                    submitButton.disabled = true;
+
+                    const hintShow = document.createElement('div');
+                    hintShow.classList.add('guess-hint');
+                    pastGuessDiv.appendChild(hintShow);
+
+                    if (userGuess === correctGuess) {
+                        const confetti = document.getElementById('confetti-pop');
+                        const message = document.getElementById('confetti-message');
+                        document.getElementById('win-sound').play();
+                        message.textContent = "Congrats, you won! The correct Score was: " + correctGuess;
+                        confetti.style.display = 'flex';
+                        presentGuessDiv.innerHTML = '';
+
+                    } else {
+                        const direction = userGuess < correctGuess ? "higher" : "lower";
+                        hintShow.textContent = `${userGuess} - Try ${direction}`;
+                        if (guessCount < maxGuesses){
+                            startGuessing();
+                        } else {
+                            const loserPop = document.getElementById('sad-pop');
+                            const loserMessage = document.getElementById('fail-message');
+                            document.getElementById('lose-sound').play();
+                            loserMessage.textContent = "Sorry, try again tomorrow. The correct score was: " + correctGuess;
+                            loserPop.style.display = 'flex';
+                            presentGuessDiv.innerHTML = '';
+                        }
+                    }
+                }
+                submitButton.addEventListener('click', Guess);
+                input.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter'){
+                        Guess();
+                    }
+                });
+            }
+            startGuessing();
+        
+            //if I fail this will tell me at least...
+        } catch (error){
+            console.error('Error fetching movie data:', error);
+            document.querySelector('.info h1').textContent = "Couldn't load a movie today.";
+            document.querySelector('.info p').textContent = "";
+            document.querySelector('.poster img').src = "";
+            document.querySelector('.trailer').innerHTML = "";
+        }
+    }
+    document.getElementById('enter-pop').addEventListener('click', () => {
+        document.getElementById('logodes-pop').style.display = 'none'
+    });
+    //movie loading... 
+    loadingMovieOfTheDay();
+</script>
+</html>
