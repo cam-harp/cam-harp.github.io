@@ -197,7 +197,7 @@
     async function loadingMovieOfTheDay() {
         try {
             //grabbing a new movie everyday
-            const baseURL = '';
+            const baseURL = 'https://cam-harp-github-io.onrender.com';
             const response = await fetch(`${baseURL}/api/movie-of-the-day`);
             const movie = await response.json();
 
