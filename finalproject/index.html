@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <title>Scored</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body{
             background-color:bisque;
@@ -22,6 +23,7 @@
             overflow: hidden;
             padding: 10px;
         }
+        
         .media {
             display: flex;
             gap: 10px;
@@ -70,6 +72,27 @@
         }
         .hint {
             font-size: 18px;
+        }
+        #movie-loading {
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: bisque;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            flex-direction: column;
+            color: tomato;
+            font-size: 25px;
+        }
+        .loading-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         #confetti-pop {
             position: fixed;
@@ -162,6 +185,12 @@
             <button id="enter-pop">Enter Game</button>
         </div>
     </div>
+    <div id="movie-loading">
+        <div class="loading-info">
+            <p>Loading Today's Movie...</p>
+            <i class="fa-solid fa-spinner fa-spin-pulse fa-3x" style="color: tomato;"></i>
+        </div>
+    </div>
     <div class="description-container">
         <div class="media">
             <div class="poster">
@@ -195,12 +224,15 @@
 <script>
 
     async function loadingMovieOfTheDay() {
+
         try {
+            document.getElementById('movie-loading').style.display = 'flex';
             //grabbing a new movie everyday
             const baseURL = 'https://cam-harp-github-io.onrender.com';
             const response = await fetch(`${baseURL}/api/movie-of-the-day`);
             const movie = await response.json();
 
+            document.getElementById('movie-loading').style.display = 'none';
             
             //finding the data from the movie
             document.querySelector('.info h1').textContent = movie.title;
@@ -320,12 +352,14 @@
             document.querySelector('.info p').textContent = "";
             document.querySelector('.poster img').src = "";
             document.querySelector('.trailer').innerHTML = "";
+            document.getElementById('movie-loading').style.display = 'none';
         }
     }
     document.getElementById('enter-pop').addEventListener('click', () => {
-        document.getElementById('logodes-pop').style.display = 'none'
+        document.getElementById('logodes-pop').style.display = 'none';
+        document.getElementById('movie-loading').style.display = 'flex';
+        loadingMovieOfTheDay();
     });
     //movie loading... 
-    loadingMovieOfTheDay();
 </script>
 </html>
