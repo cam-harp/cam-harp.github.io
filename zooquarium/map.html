@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Map | ZooQuarium Live</title>
+</head>
+
+<body class="map">
+        <header>
+            <nav>
+                <a href="index.html" class="btn">Home</a>
+            </nav>
+            <div class="logo">
+                <h1>Map</h1>
+            </div>
+            <nav>
+                <a href="directory.html" class="btn">Directory</a>
+            </nav>
+    </header>
+    <div id="map"></div>
+</body>
+<script>
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat: 39.8283, lng: -98.5795},
+            zoom: 4
+        });
+        map.data.loadGeoJson("za.json");
+    }
+</script>
+
+</html>
