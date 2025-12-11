@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Margarine&family=Unkempt:wght@400;700&display=swap" rel="stylesheet">
     <title>Map | ZooQuarium Live</title>
 </head>
 
 <body class="map">
-        <header>
+    <header>
             <nav>
                 <a href="index.html" class="btn">Home</a>
             </nav>
@@ -19,6 +22,12 @@
                 <a href="directory.html" class="btn">Directory</a>
             </nav>
     </header>
+
+    <div id="filters" class="map-filters">
+        <button class="filterBtn" data-filter="all">All</button>
+        <button class="filterBtn" data-filter="zoo">Zoos</button>
+        <button class="filterBtn" data-filter="aquarium">Aquariums</button>
+    </div>
     <div id="map"></div>
 </body>
 <script>
@@ -28,7 +37,85 @@
             zoom: 4
         });
         map.data.loadGeoJson("za.json");
+
+        let currentFilter ="all";
+        function applyFilters() {
+            map.data.setStyle(feature => {
+                if (feature.getGeometry().getType() !== "Point") return {};
+                const category = feature.getProperty("category");
+                if (currentFilter === "zoo" && category !== "zoo") return {visible: false};
+                if (currentFilter === "aquarium" && category !== "aquarium") return {visible: false};
+                return {
+                    visible: true,
+                    icon: {
+                        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                        scale: 5,
+                        fillColor: 'Tomato',
+                        fillOpacity: 1,
+                        strokeColor: 'black',
+                        strokeWeight: 0.75
+                    }
+                }
+            });
+        }
+
+        document.querySelectorAll(".filterBtn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                currentFilter = btn.dataset.filter;
+                applyFilters();
+            });
+        });
+
+        map.data.setStyle(feature => {
+            if (feature.getGeometry().getType() === "Point") {
+                return { 
+                    icon: {
+                        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                        scale: 5,
+                        fillColor: 'Tomato',
+                        fillOpacity: 1,
+                        strokeColor: 'black',
+                        strokeWeight: 0.75
+                    }
+                };
+            }
+
+        });
+
+        const infoWindow = new google.maps.InfoWindow();
+
+        map.data.addListener("click", (event) => {
+            const name = event.feature.getProperty("name");
+            const page = event.feature.getProperty("page");
+            const img = event.feature.getProperty("img");
+            const animals = event.feature.getProperty("animals") || [];
+            let animalHtml = "";
+            animals.forEach(animal => {
+                animalHtml += `<a href="${animal.url}" target="_blank">
+                    <img src="${animal.img}" alt="${animal.name}" width="80" height="80" style="margin:5px; border-radius: 5px;"></a>`;
+            });
+
+            const content = `
+                <div style ="text-align:center;">
+                ${img ? `<img src="${img}" alt="${name}" style="width:250px; height:auto; border-radius:10px; margin-bottom:10px;">` : ''}
+                <h2><a href="${page}">${name}</h2>
+                <div style="display:flex; flex-wrap:wrap;">${animalHtml}</div>
+                </div>
+            `;
+
+            infoWindow.setContent(content);
+
+            const geometry = event.feature.getGeometry();
+            let position; 
+            if (geometry.getType() === "Point") {
+                position = geometry.get();
+            }
+
+            infoWindow.setPosition(position);
+            infoWindow.open(map);
+        });
     }
 </script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq14aJB5dlZAUu-QSw_b2zKgjQawWXuw8&callback=initMap"></script>
 
 </html>

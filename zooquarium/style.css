@@ -1,5 +1,25 @@
+.margarine-regular {
+  font-family: "Margarine", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.unkempt-regular {
+  font-family: "Unkempt", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.unkempt-bold {
+  font-family: "Unkempt", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+
 body {
     background-color: #F0E491;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 body.home { 
@@ -10,20 +30,99 @@ body.home {
     justify-content: center;
     align-items: center;
     display: flex;
-    font-family:Arial, Helvetica, sans-serif;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
     min-height: 100vh;
     margin: 0;
+    font-family: "Margarine", sans-serif;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
 }
 
 body.map {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family:Arial, Helvetica, sans-serif;
 }
 
 body.directory {
-    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+body.info h3 {
+    font-family: "Unkempt", cursive;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #31694E;
+}
+
+body.info h5 {
+    font-family: "Unkempt", cursive;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #31694E;
+}
+
+body.info p{
+    font-family: "Margarine", sans-serif;
+    font-size: 1.4rem;
+    color: #31694E;
+}
+
+.animal-gallery { 
+    margin: 50px auto;
+    text-align: center;
+    width: 90%;
+}
+
+.animal-gallery h3 {
+    font-family: "Unkempt", cursive;
+    font-weight: 700;
+    color:#31694E;
+    margin-bottom: 20px;
+}
+
+.gallery-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px
+}
+
+.animal-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #31694E;
+    width: 180px;
+    transition: transform 0.2s ease;
+}
+
+.building {
+    width: 300px;
+    height: 200px;
+    border-radius: 15px;
+}
+
+.animal-link:hover {
+    transform: scale(1.05);
+}
+
+.animal-img {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.animal-name {
+    margin-top: 8px;
+    font-family: "Unkempt", cursive;
+    font-weight: 700;
+    font-size: 1.2rem;
 }
 
 .zoo-card {
@@ -34,6 +133,8 @@ body.directory {
     margin-bottom: 20px;
     margin-top: 20px;
     color: #31694E;
+    font-family: "Unkempt", cursive;
+    font-weight: 700;
 }
 
 .zoo-header {
@@ -41,7 +142,7 @@ body.directory {
     justify-content: space-between;
     font-size: 1.6rem;
     margin-bottom: 15px;
-    text-decoration: none;
+    font-family: "Unkempt", cursive;
 }
 
 .animal-row {
@@ -55,26 +156,41 @@ body.directory {
     border-radius: 15px;
     margin-bottom: 20px;
     padding: 20px;
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     text-decoration: none;
     color: #31694E;
+    gap: 15px;
     transition: transform 0.2s ease;
 }
 
 .animal-card img {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 10px;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .animal-card:hover {
     transform: scale(1.1);
+}
+
+.animal-card video {
+    width: 110%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+    border-radius: 15px;
+    cursor: pointer;
 }
 
 .container {
@@ -105,10 +221,9 @@ body.directory {
     text-align: center;
 }
 
-.logo img{
-    width: 100%;
+body.home .logo img{
+    width: clamp(200px, 80%, 900px);
     height: auto;
-    max-width: 650px;
     display: block;
     margin: 0 auto;
     user-select: none;
@@ -129,7 +244,7 @@ body.directory {
     border-radius: 25px;
     padding: 20px 40px;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     margin: 10px;
     display: inline-block;
@@ -181,12 +296,45 @@ body.directory {
     text-align: center;
 }
 
+.map-filters {
+    position: absolute;
+    bottom: 50px;
+    left: 51%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 200;
+}
+
+.filterBtn {
+    background-color: #BBC863;
+    color: #31694E;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 15px 30px;
+    transition: background-color 0.3s ease, color 0.3 ease;
+    font-family: "Margarine", sans-serif;
+}
+
+.filterBtn:hover {
+    background-color: #658C58;
+    color: #F0E491;
+}
+
 #map {
+    position: relative;
     height: 90vh;
     width: 100%;
 }
 
 header {
+    width: 100%;
+    max-width: none;
+    justify-content: space-between;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,7 +344,51 @@ header {
     border: 2px solid #31694E;
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
     z-index: 100;
+    font-family: "Margarine", sans-serif;
+    font-weight: 700;
+}
+
+header h1 {
+    font-family: "Margarine", sans-serif;
+    font-weight: 700;
+}
+
+header nav a {
+    font-family: "Margarine", sans-serif;
+    font-weight: 700;
+}
+
+header .header-inside {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-sizing: border-box;
+}
+
+@media (max-width:600px){
+    header .header-inside { flex-wrap: wrap; gap: 8px; padding: 10px 16px;}
+    header .logo { order: 0; width: 100%;}
+    header nav { width: auto;}
+    body.info h3 { font-size: 1.6rem;}
+    body.info h5 { font-size: 1.4rem;}
+    .animal-row { flex-direction: column; gap: 20px; align-items: center;}
+    .animal-card { width: 120px; height: 120px;}
+    .info-layout { flex-direction: column; gap: 20px; width: 95%;}
+    .info-box { width: 100%;}
+    .small-box { width: 100%}
+    .animal-card:hover { transform: none;}
+    .animal-link { width: 140px;}
+    .animal-img { height: 140px;}
+    .animal-name { font-size: 1rem;}
+    .btn, .filterBtn { padding: 12px 20px; font-size: 1.2rem;}
+    #map { height: 70vh;}
 }
 
 nav a {
@@ -205,6 +397,8 @@ nav a {
     color: #31694E;
     font-weight: 600;
     transition: color 0.3s ease;
+    font-family: "Margarine", sans-serif;
+    font-weight: 400;
 }
 
 nav a:hover {

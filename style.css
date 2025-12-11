@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: "DM sans", sans-serif;
+    font-style: normal;
+    font-weight: 750;
+}
+
+body {
+    background: #0A3A66;
+}
+
+#liquid-ether {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+.liquid-ether-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    padding: 15px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+header h1 {
+    color: #B9DBFF;
+    font-size: 1.5em;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #B9DBFF;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #0F6FB8;
+}
+
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    color: #B9DBFF;
+}
+
+.hero h2 {
+    font-size: 1.6em;
+    margin-bottom: 1em;
+    color: #B9DBFF;
+}
+
+.hero h3 {
+    font-size: 1.4em;
+    margin-bottom: 1em;
+    color: #B9DBFF;
+
+}
+
+.hero p {
+    font-size: 1.1em;
+    max-width: 700px;
+    color: #B9DBFF;
+    margin: 0 auto 1.5em;
+}
+
+.hero .btn {
+    text-decoration: none;
+    background: linear-gradient(90deg, #0A3A66, #0F6FB8);
+    color: #FFFFFF;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.hero .btn:hover {
+    background: linear-gradient(90deg, #0F6FB8, #0A3A66);
+}
+
+.projects {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.projects h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 40px;
+    color: #B9DBFF;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.project-card {
+    background: #F2F7FA;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(15, 111, 184, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(15, 111, 184, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 18px rgba(15, 111, 184, 0.15);
+}
+
+.project-card h3 {
+    margin-bottom: 12px;
+    color: #0F6FB8;
+}
+
+.project-card p {
+    margin-bottom: 12px;
+    color: #06131F;
+}
+
+.project-card a {
+    text-decoration: none;
+    color: #0A3A66;
+    font-weight: 600;
+}
+
+.project-card a:hover {
+    color: #0F6FB8;
+}
+
+.project-iframe {
+    width: 100%;
+    height: 250px;
+    border: 2px solid #0F6FB8;
+    border-radius: 8px;
+    margin-bottom: 1em;
+    transition: transform 0.3s ease;
+}
+
+.project-iframe:hover {
+    transform: scale(1.02);
+}
+
+.iframe-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    position: relative;
+    width: 80vw;
+    height: 80vh;
+    background: #FFFFFF;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2em;
+    color: #0A3A66;
+    cursor: pointer;
+    z-index: 2100;
+}
+
+.modal-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.expand-btn {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #0F6FB8, #0A3A66);
+    color: #FFFFFF;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 5px;
+}
+
+.project-preview {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #0F6FB8;
+    margin-bottom: 0.5em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.project-preview:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+.expand-btn:hover {
+    background: linear-gradient(90deg, #0F6FB8, #0A3A66);
+}
+
+@media (max-width: 760px) {
+    .hero h1 {
+        font-size: 2.5em;
+    }
+
+    .hero h2 {
+        font-size: 1.3em;
+    }
+
+    .project-iframe {
+        height: 300px;
+    }
+}
