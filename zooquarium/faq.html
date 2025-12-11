@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Margarine&family=Unkempt:wght@400;700&display=swap" rel="stylesheet">
     <title>FAQ | ZooQuarium Live</title>
 </head>
 
 <body class="faq">
     <header>
+        <div class="header-inside">
             <nav>
                 <a href="index.html" class="btn">Home</a>
             </nav>
@@ -18,7 +22,49 @@
             <nav>
                 <a href="map.html" class="btn">Map</a>
             </nav>
+        </div>
     </header>
-    <a href="sources.html">Sources</a>
+    <div class="content-box">
+        <button class="faq-question">Why is a camera showing as offline?</button>
+        <div class="faq-answer">
+            <p>This is a technical difficulty on the zoo/aquarium’s end. Unfortunately, we are not able to say when a camera will come back online, but if you notice that a camera has been offline for some time, feel free to contact the respective zoo/aquarium to let them know!</p>
+        </div>
+        <button class="faq-question">Why are there no animals on one of the cameras?</button>
+        <div class="faq-answer">
+            <p>Since these are live cameras, the animals may be doing something that isn’t in front of the cameras such as eating, sleeping, or interacting in another part of their enclosure. Check back later to see if they make an appearance!</p>
+        </div>
+        <button class="faq-question">I want to directly support a zoo/aquarium. How can I do this?</button>
+        <div class="faq-answer">
+            <p>We share direct links to each zoo and aquarium’s conservation information and ways to get involved on their homepages under our DIRECTORY.</p>
+        </div>
+        <button class="faq-question">I have a question about one of the animals or exhibits. Can you help me?</button>
+        <div class="faq-answer">
+            <p>ZooQuarium Live is a stepping stone in connecting you with zoos and aquariums. If you have any questions about the animals, exhibits, or institutions themselves, please contact the zoo/aquarium directly!</p>
+        </div>
+        <button class="faq-question">Why isn’t XYZ zoo or aquarium on this website?</button>
+        <div class="faq-answer">
+            <p>If you’re not seeing a zoo or aquarium you’re familiar with, there are several reasons why this could be, but the main reason is that they don’t have live cameras available online.</p>
+        </div>
+        <button class="faq-question">What organization is ZooQuarium live affiliated with?</button>
+        <div class="faq-answer">
+            <p>ZooQuarium Live is an independent student-run project that is not affiliated with any other organization including any of the zoos, aquariums, or organizations linked on our website.</p>
+        </div>
+        <button class="faq-question">I know of a zoo or aquarium that has live cameras and would be a good fit for this website! How can I get them added?</button>
+        <div class="faq-answer">
+            <p>Please contact us at zooquariumlive@gmail.com to send us information about your zoo/aquarium and we’ll look into adding them!</p>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll(".faq-question").forEach(button => {
+            button.addEventListener("click", () => {
+                const answer = button.nextElementSibling;
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
