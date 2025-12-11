@@ -288,11 +288,11 @@ body.home .logo img{
 }
 
 .bottom-buttons .btn {
-    margin: 0 10px;
+    margin: 5px 0;
     padding: 18px 30px;
     border-radius: 50px;
     font-size: 1.56rem;
-    flex: 1;
+    flex: 1 1 45%;
     text-align: center;
 }
 
@@ -378,6 +378,7 @@ header .header-inside {
     header nav { width: auto;}
     body.info h3 { font-size: 1.6rem;}
     body.info h5 { font-size: 1.4rem;}
+    .bottom-buttons { flex-wrap: wrap; justify-content: space-between; gap: 10px;}
     .animal-row { flex-direction: column; gap: 20px; align-items: center;}
     .animal-card { width: 120px; height: 120px;}
     .info-layout { flex-direction: column; gap: 20px; width: 95%;}
