@@ -222,7 +222,7 @@ body.info p{
 }
 
 body.home .logo img{
-    width: clamp(200px, 80%, 900px);
+    width: clamp(200px, 100%, 900px);
     height: auto;
     display: block;
     margin: 0 auto;
